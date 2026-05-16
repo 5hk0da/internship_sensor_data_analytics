@@ -3,36 +3,59 @@ import random as rnd
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-#creating class as our common indications for future values
-class indications:
+
+class Indications:#creating class for our functions
+
     def __init__(self):
-        self.sensor_drift = 0
-#making functions for all values
-    def temperature(self):
-        temp = rnd.uniform(0,45)
-        print(f'The temperature is:{temp}')
-        if temp < 0 or temp > 45:
-            print(f'The temperature is:{temp},something went wrong')
 
-    def overheating(self):
-        over = rnd.uniform(0.1,0.2)
-        print(f'The overheating is:{over}')
-        if over > 100:
-            print(f'The overheating is:{over},the accident is possible')
+        #Normal values
+        self.temp_base = 25
+        self.vibration_base = 50
+        self.drift_base = 0.1
+        self.overheating_base = 0
 
-    def vibration(self):
-        vibr = rnd.uniform(50,100)
-        print(f'The vibraion is:{vibr}')
-        if vibr
-    def sensor_drift(self):
-        sens = rnd.uniform(0.1,0.5)
-        print(f'The sensor_drift is:{sensor_drift}')
-        if sensor_drift > 0.5:
-            print(f'The drift is:{sensor_drift},the accident is possible')
+        #Wear
+        self.temp_wear = 0
+        self.vibration_wear = 0
+        self.drift_wear = 0
+        self.overheating_wear = 0
 
-    def noise(self):
-        noise = rnd.uniform(75,80)
-        print(f'The noise is:{noise}')
-        if noise > 100:
-            print(f'The noise is:{noise}A,the accident is possible')
+    def temperature(self):#creating temperature function with adding wear
+        self.temp_wear += rnd.uniform(0.1, 0.5)
+        value = self.temp_base + self.temp_wear + rnd.uniform(-1, 1)
+        print(f"Temperature: {value:.2f}°C")
+        if value > 45:
+            print("WARNING: OVERHEATING")
 
+    def vibration(self):#creating vibration function with adding wear
+        self.vibration_wear += rnd.uniform(0.2, 1)
+        value = self.vibration_base + self.vibration_wear + rnd.uniform(-2, 2)
+        print(f"Vibration: {value:.2f}")
+        if value > 100:
+            print("WARNING: CRITICAL VIBRATION")
+
+    def sensor_drift(self):#creating sensor drift function with adding wear
+        self.drift_wear += rnd.uniform(0.01, 0.05)
+        value = self.drift_base + self.drift_wear
+        print(f"Sensor drift: {value:.3f}")
+        if value > 0.5:
+            print("WARNING: SENSOR DEGRADATION")
+
+    def overheating(self):#creating overheating function with adding wear
+        self.overheating_wear += rnd.uniform(0.01, 0.03)
+        value = self.overheating_base + self.overheating_wear
+        print(f"Overheating: {value:.3f}")
+        if value > 0.2:
+            print("WARNING: OVERHEATING RISK")
+
+
+robot = Indications()
+
+for i in range(15):
+
+    print(f"\n--- CYCLE {i+1} ---")
+
+    robot.temperature()
+    robot.vibration()
+    robot.sensor_drift()
+    robot.overheating()
