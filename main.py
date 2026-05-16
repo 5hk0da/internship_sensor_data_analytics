@@ -4,7 +4,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-class Indications:#creating class for our functions
+#creating class for our functions
+class Indications:
 
     def __init__(self):
 
@@ -20,28 +21,32 @@ class Indications:#creating class for our functions
         self.drift_wear = 0
         self.overheating_wear = 0
 
-    def temperature(self):#creating temperature function with adding wear
+    # creating temperature function with adding wear
+    def temperature(self):
         self.temp_wear += rnd.uniform(0.1, 0.5)
         value = self.temp_base + self.temp_wear + rnd.uniform(-1, 1)
         print(f"Temperature: {value:.2f}°C")
         if value > 45:
             print("WARNING: OVERHEATING")
 
-    def vibration(self):#creating vibration function with adding wear
+    # creating vibration function with adding wear
+    def vibration(self):
         self.vibration_wear += rnd.uniform(0.2, 1)
         value = self.vibration_base + self.vibration_wear + rnd.uniform(-2, 2)
         print(f"Vibration: {value:.2f}")
         if value > 100:
             print("WARNING: CRITICAL VIBRATION")
 
-    def sensor_drift(self):#creating sensor drift function with adding wear
+    # creating sensor drift function with adding wear
+    def sensor_drift(self):
         self.drift_wear += rnd.uniform(0.01, 0.05)
         value = self.drift_base + self.drift_wear
         print(f"Sensor drift: {value:.3f}")
         if value > 0.5:
             print("WARNING: SENSOR DEGRADATION")
 
-    def overheating(self):#creating overheating function with adding wear
+    # creating overheating function with adding wear
+    def overheating(self):
         self.overheating_wear += rnd.uniform(0.01, 0.03)
         value = self.overheating_base + self.overheating_wear
         print(f"Overheating: {value:.3f}")
